@@ -1,0 +1,3 @@
+com.wanna.boot.autoconfigure.EnableAutoConfiguration=\
+  com.wanna.spring.dubbo.boot.autoconfigure.DubboAutoConfiguration,\
+  com.wanna.spring.dubbo.boot.autoconfigure.DubboRelaxedBindingAutoConfiguration
