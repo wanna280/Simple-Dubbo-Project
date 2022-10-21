@@ -19,11 +19,10 @@ import com.wanna.framework.context.processor.factory.BeanDefinitionRegistryPostP
 import com.wanna.framework.context.processor.factory.internal.ConfigurationClassPostProcessor
 import com.wanna.framework.core.environment.Environment
 import com.wanna.framework.core.type.filter.AnnotationTypeFilter
-import com.wanna.framework.core.util.AnnotationConfigUtils
-import com.wanna.framework.core.util.AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR
-import com.wanna.framework.core.util.StringUtils
-import com.wanna.spring.dubbo.config.spring.ServiceBean
+import com.wanna.framework.util.AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR
+import com.wanna.framework.util.StringUtils
 import com.wanna.spring.dubbo.config.context.DubboBootstrapApplicationListener
+import com.wanna.spring.dubbo.config.spring.ServiceBean
 import com.wanna.spring.dubbo.util.BeanRegistrar
 import com.wanna.spring.dubbo.util.DubboAnnotationUtils
 import org.slf4j.LoggerFactory

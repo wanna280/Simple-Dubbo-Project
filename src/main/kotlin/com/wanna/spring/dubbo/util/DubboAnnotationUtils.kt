@@ -1,8 +1,8 @@
 package com.wanna.spring.dubbo.util
 
 import com.wanna.framework.context.annotation.AnnotationAttributes
-import com.wanna.framework.core.util.ClassUtils
-import com.wanna.framework.core.util.StringUtils
+import com.wanna.framework.util.ClassUtils
+import com.wanna.framework.util.StringUtils
 
 /**
  * Dubbo的注解工具类

@@ -5,7 +5,7 @@ import com.wanna.framework.beans.factory.support.definition.BeanDefinition
 import com.wanna.framework.beans.factory.support.definition.RootBeanDefinition
 import com.wanna.framework.context.annotation.ImportBeanDefinitionRegistrar
 import com.wanna.framework.core.type.AnnotationMetadata
-import com.wanna.framework.core.util.ClassUtils
+import com.wanna.framework.util.ClassUtils
 import com.wanna.spring.dubbo.util.DubboBeanUtils
 
 /**
@@ -59,10 +59,11 @@ open class DubboComponentScanRegistrar : ImportBeanDefinitionRegistrar {
     private fun getDubboServicePackagesToScan(annotationMetadata: AnnotationMetadata): Set<String> {
         val attributes = annotationMetadata.getAnnotationAttributes(DubboComponentScan::class.java.name)
 
-        val packages = HashSet<String>()
+        var packages = HashSet<String>()
         packages += (attributes["value"] as Array<String>)
         packages += (attributes["basePackages"] as Array<String>)
-        packages += ((attributes["basePackageClasses"] as Array<Class<*>>).map { it.packageName }.toList())
+        val basePackageClasses = attributes["basePackageClasses"] as Array<Class<*>>
+        packages += basePackageClasses.map { it.packageName }.toList()
         if (packages.isEmpty()) {
             packages += ClassUtils.getPackageName(annotationMetadata.getClassName())
         }

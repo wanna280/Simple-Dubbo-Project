@@ -8,7 +8,7 @@ import com.wanna.framework.context.processor.beans.BeanPostProcessor
 import com.wanna.framework.core.Ordered
 import com.wanna.framework.core.PriorityOrdered
 import com.wanna.framework.core.convert.TypeDescriptor
-import com.wanna.framework.core.util.ReflectionUtils
+import com.wanna.framework.util.ReflectionUtils
 import com.wanna.spring.dubbo.annotation.ConfigurationBeanBindingRegistrar.Companion.CONFIGURATION_BINDING_ANNOTATION_CLASS
 import java.lang.reflect.Method
 

@@ -1,6 +1,6 @@
 package com.wanna.test.dubbo.classloader
 
-import com.wanna.framework.core.util.ClassUtils
+import com.wanna.framework.util.ClassUtils
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 

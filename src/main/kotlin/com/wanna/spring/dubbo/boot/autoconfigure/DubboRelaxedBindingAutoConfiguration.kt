@@ -4,7 +4,7 @@ import com.wanna.framework.beans.factory.annotation.Qualifier
 import com.wanna.framework.context.annotation.Bean
 import com.wanna.framework.context.annotation.Configuration
 import com.wanna.framework.core.environment.Environment
-import com.wanna.framework.core.util.StringUtils
+import com.wanna.framework.util.StringUtils
 
 @Configuration(proxyBeanMethods = false)
 open class DubboRelaxedBindingAutoConfiguration {
