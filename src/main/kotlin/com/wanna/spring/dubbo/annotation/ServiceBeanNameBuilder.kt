@@ -40,11 +40,11 @@ open class ServiceBeanNameBuilder(
      * @return 生成得到的beanName("{interfaceName}#{group}#{version}")
      */
     open fun build(): String {
-        val builder = StringBuilder()
+        val builder = StringBuilder("ServiceBean")
         append(builder, serviceInterfaceName)
         append(builder, group)
         append(builder, version)
-        return environment.resolveRequiredPlaceholders(builder.substring(0, builder.length - SEPARATOR.length))
+        return environment.resolveRequiredPlaceholders(builder.toString())
     }
 
     companion object {
@@ -63,7 +63,7 @@ open class ServiceBeanNameBuilder(
         @JvmStatic
         private fun append(builder: StringBuilder, value: String?) {
             if (StringUtils.hasText(value)) {
-                builder.append(value).append(SEPARATOR)
+                builder.append(SEPARATOR).append(value)
             }
         }
 
