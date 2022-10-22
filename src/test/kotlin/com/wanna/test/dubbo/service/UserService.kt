@@ -1,3 +1,5 @@
 package com.wanna.test.dubbo.service
 
-interface UserService
+interface UserService {
+    fun getUserById(id: Int): String
+}

@@ -9,15 +9,6 @@ package com.wanna.spring.dubbo.config
  */
 abstract class AbstractServiceConfig : AbstractInterfaceConfig() {
 
-    // 当前Service要使用哪些协议去暴露服务？
-    var protocols: MutableList<ProtocolConfig> = ArrayList()
-
-    // 当前Service的ApplicationConfig
-    var application: ApplicationConfig? = null
-
-    // 当前DubboService服务要注册到哪些注册中心当中去
-    var registries: MutableList<RegistryConfig> = ArrayList()
-
     open fun setRegistry(registryConfig: RegistryConfig) {
         this.registries = arrayListOf(registryConfig)
     }

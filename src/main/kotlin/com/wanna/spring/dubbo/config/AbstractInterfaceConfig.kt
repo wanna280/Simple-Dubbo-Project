@@ -14,6 +14,24 @@ package com.wanna.spring.dubbo.config
  */
 abstract class AbstractInterfaceConfig : AbstractMethodConfig() {
 
-    // interfaceName
-    protected var interfaceName: String? = null
+    /**
+     * 当前Service要使用哪些协议去暴露服务？
+     */
+    var protocols: MutableList<ProtocolConfig> = ArrayList()
+
+    /**
+     * ApplicationConfig
+     */
+    var application: ApplicationConfig? = null
+
+    /**
+     * 要注册到哪些注册中心当中？
+     */
+    var registries: MutableList<RegistryConfig> = ArrayList()
+
+    /**
+     * Consumer配置
+     */
+    var consumer: ConsumerConfig? = null
+
 }

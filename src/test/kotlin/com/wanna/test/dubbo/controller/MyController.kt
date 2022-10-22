@@ -19,6 +19,7 @@ open class MyController {
 
     @RequestMapping(["/user"])
     open fun getUser(response: HttpServerResponse): Any? {
+        response.getCookies()
         println(javaClass.classLoader)
         return "11111"
     }

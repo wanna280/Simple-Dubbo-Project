@@ -7,11 +7,17 @@ import com.alibaba.nacos.api.NacosFactory
  */
 open class ServiceConfig<T> : ServiceConfigBase<T>() {
 
+    @Volatile
+    private var exported: Boolean = false
+
+    open fun isExported(): Boolean = this.exported
+
+
     /**
      * 暴露一个DubboService到注册中心当中
      */
     open fun exported() {
-
+        this.exported = true
     }
 
     override fun export() {

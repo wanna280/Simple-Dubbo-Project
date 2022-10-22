@@ -28,26 +28,40 @@ import com.wanna.spring.dubbo.util.DubboAnnotationUtils
 import org.slf4j.LoggerFactory
 
 /**
- * Dubbo的Service的处理器，是一个BeanDefinitionRegistryPostProcessor，负责将标注了@DubboService的Bean注册到Spring当中
+ * Dubbo的Service的处理器，是一个BeanDefinitionRegistryPostProcessor，
+ * 它主要负责将标注了@DubboService的Bean全部使用BeanDefinition的方式去注册到BeanFactory当中，
+ * 同时，针对具体的DubboService去创建出来一个ServiceBean对象，去注册到Spring BeanFactory当中；
  *
  * @see DubboService
+ *
+ * @param packages 要去进行扫描的包的列表
  */
-open class ServiceClassPostProcessor(// 要扫描的包的列表
+open class ServiceClassPostProcessor(
     private var packages: Set<String> = emptySet()
 ) : BeanDefinitionRegistryPostProcessor, BeanClassLoaderAware, EnvironmentAware {
     companion object {
-        // 要注册为DubboService的注解列表
+        /**
+         * 要注册为DubboService的注解列表
+         */
         private val serviceAnnotationTypes = setOf(
             DubboService::class.java
         )
 
-        // Logger
+        /**
+         * Logger
+         */
         private val logger = LoggerFactory.getLogger(ServiceClassPostProcessor::class.java)
     }
 
-    private lateinit var classLoader: ClassLoader
+    /**
+     * ClassLoader
+     */
+    private var classLoader: ClassLoader? = null
 
-    private lateinit var environment: Environment
+    /**
+     * Environment
+     */
+    private var environment: Environment? = null
 
     override fun setBeanClassLoader(classLoader: ClassLoader) {
         this.classLoader = classLoader
@@ -56,6 +70,10 @@ open class ServiceClassPostProcessor(// 要扫描的包的列表
     override fun setEnvironment(environment: Environment) {
         this.environment = environment
     }
+
+    open fun getEnvironment(): Environment = this.environment ?: throw IllegalStateException("Environment不能为null")
+
+    open fun getClassLoader(): ClassLoader = this.classLoader ?: throw IllegalStateException("ClassLoader不能为null")
 
     open fun setPackages(packagesToScan: Set<String>) {
         this.packages = packagesToScan
@@ -89,15 +107,18 @@ open class ServiceClassPostProcessor(// 要扫描的包的列表
         val beanNameGenerator = resolveBeanNameGenerator(registry)
         scanner.setBeanNameGenerator(beanNameGenerator)
 
-        // 扫描指定的包下的所有DubboService的所有BeanDefinition的列表
+        // 扫描指定的包下的所有@DubboService的所有BeanDefinition的列表
+        // Note: 在scan方法内部已经完成了@DubboService的Bean的注册
         val beanDefinitions = scanner.doScan(*packagesToScan.toTypedArray())
+
+        // 针对所有的@DubboService，去注册一个对应的ServiceBean的BeanDefinition
         beanDefinitions.forEach {
             registerServiceBean(it, registry, scanner)
         }
     }
 
     /**
-     * 给定一个@DubboService的BeanDefinition，去注册一个ServiceBean
+     * 给定一个@DubboService的BeanDefinition，去注册一个该DubboService对应的ServiceBean
      *
      * @param beanDefinitionHolder ServiceBean的BeanDefinitionHolder
      * @param registry BeanDefinitionRegistry
@@ -175,6 +196,8 @@ open class ServiceClassPostProcessor(// 要扫描的包的列表
         val propertyValues = definition.getPropertyValues()
         propertyValues.addPropertyValue("interfaceName", interfaceClass.name)
         propertyValues.addPropertyValue("interfaceClass", interfaceClass)
+
+        // 这种ref，将ServiceBean对象的ref字段去引用到真正的DubboService的SpringBean
         propertyValues.addPropertyValue("ref", RuntimeBeanReference(annotatedServiceBeanName))
 
         // 解析配置的ProtocolConfig的beanName列表
@@ -194,7 +217,7 @@ open class ServiceClassPostProcessor(// 要扫描的包的列表
         // 解析配置的ApplicationConfig的beanName
         val application = serviceAnnotationAttributes.getString("application")
         if (StringUtils.hasText(application)) {
-            propertyValues.addPropertyValue("application", RuntimeBeanReference(application!!))
+            propertyValues.addPropertyValue("application", RuntimeBeanReference(application))
         }
 
         return definition
@@ -231,9 +254,10 @@ open class ServiceClassPostProcessor(// 要扫描的包的列表
      *
      * @param attributes @DubboService注解属性信息
      * @param interfaceClass @DubboService的接口类
+     * @return 生成的beanName("{interfaceName}#{group}#{version}")
      */
     private fun generateServiceBeanName(attributes: AnnotationAttributes, interfaceClass: Class<*>): String {
-        return "Service:${interfaceClass.name}"
+        return ServiceBeanNameBuilder.create(attributes, interfaceClass, getEnvironment()).build()
     }
 
     override fun postProcessBeanFactory(beanFactory: ConfigurableListableBeanFactory) {
