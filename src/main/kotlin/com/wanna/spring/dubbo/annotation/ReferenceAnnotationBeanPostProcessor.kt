@@ -1,6 +1,7 @@
 package com.wanna.spring.dubbo.annotation
 
 import com.wanna.framework.beans.factory.InjectionMetadata
+import com.wanna.framework.beans.factory.support.DisposableBean
 import com.wanna.framework.context.ApplicationContext
 import com.wanna.framework.context.ApplicationContextAware
 import com.wanna.framework.context.annotation.AnnotationAttributes
@@ -334,16 +335,46 @@ open class ReferenceAnnotationBeanPostProcessor
         return ServiceBeanNameBuilder.create(attributes, serviceInterfaceType, getEnvironment()).build()
     }
 
+    /**
+     * 获取Attributes
+     *
+     * @param attributes attributes
+     */
     private fun getAttributes(attributes: AnnotationAttributes, environment: Environment): Map<String, String> {
-        return emptyMap()
+        return attributes.entries.associate { (key, value) -> key to value.toString() }
     }
 
+    /**
+     * 设置ApplicationContext
+     *
+     * @param applicationContext ApplicationContext
+     */
     override fun setApplicationContext(applicationContext: ApplicationContext) {
         this.applicationContext = applicationContext
     }
 
+    /**
+     * 获取ApplicationContext
+     *
+     * @return ApplicationContext
+     */
     open fun getApplicationContext(): ApplicationContext =
         this.applicationContext ?: throw IllegalStateException("ApplicationContext不能为null")
+
+    /**
+     * 当Bean摧毁时，需要把所有的Cache给清空掉
+     */
+    override fun destroy() {
+        super.destroy()
+        this.referenceBeanCache.clear()
+        this.injectedFieldReferenceBeanCache.clear()
+        this.injectedMethodReferenceBeanCache.clear()
+        this.referencedBeanInvocationHandlersCache.clear()
+
+        if (logger.isInfoEnabled) {
+            logger.info("[${this.javaClass}]正在被摧毁...")
+        }
+    }
 
     /**
      * 处理Dubbo的本地服务引用的InvocationHandler，负责生成@DubboReference注解需要注入的对象的代理对象；

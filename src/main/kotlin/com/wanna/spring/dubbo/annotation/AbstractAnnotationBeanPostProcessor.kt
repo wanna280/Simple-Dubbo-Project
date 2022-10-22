@@ -6,6 +6,7 @@ import com.wanna.framework.beans.PropertyValues
 import com.wanna.framework.beans.factory.BeanFactory
 import com.wanna.framework.beans.factory.InjectionMetadata
 import com.wanna.framework.beans.factory.config.ConfigurableListableBeanFactory
+import com.wanna.framework.beans.factory.support.DisposableBean
 import com.wanna.framework.beans.factory.support.definition.RootBeanDefinition
 import com.wanna.framework.context.annotation.AnnotationAttributes
 import com.wanna.framework.context.annotation.AnnotationAttributesUtils
@@ -36,8 +37,8 @@ import kotlin.jvm.Throws
  * @param annotationTypes 需要去进行处理的注解列表
  */
 abstract class AbstractAnnotationBeanPostProcessor(private val annotationTypes: Array<Class<out Annotation>>) :
-    MergedBeanDefinitionPostProcessor, BeanFactoryAware,
-    EnvironmentAware, PriorityOrdered, BeanClassLoaderAware, InstantiationAwareBeanPostProcessor {
+    MergedBeanDefinitionPostProcessor, BeanFactoryAware, EnvironmentAware, PriorityOrdered, BeanClassLoaderAware,
+    InstantiationAwareBeanPostProcessor, DisposableBean {
 
     /**
      * Logger
@@ -261,6 +262,23 @@ abstract class AbstractAnnotationBeanPostProcessor(private val annotationTypes: 
         } else {
             throw IllegalStateException("仅仅支持ConfigurableListableBeanFactory，但是给定的是[${beanFactory.javaClass.name}]")
         }
+    }
+
+    /**
+     * 当Bean被摧毁时，需要清理掉内部的全部缓存
+     */
+    override fun destroy() {
+
+        // 对所有的Bean去进行摧毁
+        this.injectedObjectsCache.values.forEach {
+            if (it is DisposableBean) {
+                it.destroy()
+            }
+        }
+
+        // clearCache
+        this.injectedObjectsCache.clear()
+        this.injectionMetadataCache.clear()
     }
 
     protected open fun getBeanFactory(): ConfigurableListableBeanFactory =
