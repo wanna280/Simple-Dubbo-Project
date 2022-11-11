@@ -45,13 +45,17 @@ open class ConfigurationBeanBindingPostProcessor : BeanPostProcessor, PriorityOr
      * @param beanName beanName
      */
     override fun postProcessBeforeInitialization(beanName: String, bean: Any): Any? {
-        val beanDefinition = this.beanFactory?.getBeanDefinition(beanName)
+        // check contains
+        if (this.beanFactory?.containsBeanDefinition(beanName) == true) {
+            val beanDefinition = this.beanFactory?.getBeanDefinition(beanName)
 
-        // 判断source是否是EnableConfigurationBeanBinding，如果是的话，说明它是一个Dubbo的配置类
-        // 我们需要去对该Bean当中的各个属性去完成设置
-        if (isConfigurationBean(bean, beanDefinition)) {
-            bindConfigurationBean(bean, beanDefinition!!)
+            // 判断source是否是EnableConfigurationBeanBinding，如果是的话，说明它是一个Dubbo的配置类
+            // 我们需要去对该Bean当中的各个属性去完成设置
+            if (isConfigurationBean(bean, beanDefinition)) {
+                bindConfigurationBean(bean, beanDefinition!!)
+            }
         }
+
         return bean
     }
 

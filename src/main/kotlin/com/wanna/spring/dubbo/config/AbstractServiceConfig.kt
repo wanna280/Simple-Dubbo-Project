@@ -9,6 +9,11 @@ package com.wanna.spring.dubbo.config
  */
 abstract class AbstractServiceConfig : AbstractInterfaceConfig() {
 
+    var version: String? = null
+
+    var group: String? = null
+
+
     open fun setRegistry(registryConfig: RegistryConfig) {
         this.registries = arrayListOf(registryConfig)
     }

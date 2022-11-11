@@ -5,11 +5,20 @@ import com.wanna.spring.dubbo.config.context.ConfigManager
 
 object ApplicationModel {
 
-    // Dubbo的ConfigManager
+    /**
+     * Dubbo的ConfigManager
+     */
     private val configManager = ConfigManager()
 
-    // Dubbo的Environment
-    private val environment:Environment = Environment()
+    /**
+     * Dubbo的Environment
+     */
+    private val environment = Environment()
+
+    /**
+     * Dubbo服务的注册中心
+     */
+    private val serviceRepository = ServiceRepository()
 
     @JvmStatic
     fun getConfigManager(): ConfigManager {
@@ -17,7 +26,12 @@ object ApplicationModel {
     }
 
     @JvmStatic
-    fun getEnvironment() : Environment {
+    fun getEnvironment(): Environment {
         return this.environment
+    }
+
+    @JvmStatic
+    fun getServiceRepository(): ServiceRepository {
+        return this.serviceRepository
     }
 }
