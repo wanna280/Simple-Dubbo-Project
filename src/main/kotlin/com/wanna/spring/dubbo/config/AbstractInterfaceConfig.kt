@@ -28,10 +28,4 @@ abstract class AbstractInterfaceConfig : AbstractMethodConfig() {
      * 要注册到哪些注册中心当中？
      */
     var registries: MutableList<RegistryConfig> = ArrayList()
-
-    /**
-     * Consumer配置
-     */
-    var consumer: ConsumerConfig? = null
-
 }

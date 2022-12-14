@@ -72,11 +72,6 @@ open class ReferenceBeanBuilder(
      */
     private fun configureConsumerConfig(attributes: AnnotationAttributes, referenceBean: ReferenceBean<*>) {
         val consumer = attributes.getString("consumer")
-        try {
-            referenceBean.consumer = applicationContext.getBean(consumer, ConsumerConfig::class.java)
-        } catch (ex: NoSuchBeanDefinitionException) {
-
-        }
     }
 
     private fun configureMethodConfig(attributes: AnnotationAttributes, referenceBean: ReferenceBean<*>) {
