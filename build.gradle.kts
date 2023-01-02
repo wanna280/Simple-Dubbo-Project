@@ -22,6 +22,7 @@ dependencies {
     implementation("com.wanna:kotlin-spring-boot-actuator:$ksVersion")
     implementation("com.wanna:kotlin-spring-boot-actuator-autoconfigure:$ksVersion")
     implementation("io.micrometer:micrometer-core:1.9.5")  // metrics
+    implementation("javax.servlet:javax.servlet-api:4.0.1") // servlet-api
 
     // DevTools和Test有冲突？
     // implementation("com.wanna:Kotlin-Spring-Boot-Devtools:$ksVersion")
@@ -38,6 +39,7 @@ dependencies {
     testImplementation("com.wanna:kotlin-spring-test:$ksVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    testImplementation("org.apache.tomcat.embed:tomcat-embed-core:9.0.70")
 
     testImplementation("com.alibaba:druid:1.2.10")
     testImplementation("mysql:mysql-connector-java:8.0.29")

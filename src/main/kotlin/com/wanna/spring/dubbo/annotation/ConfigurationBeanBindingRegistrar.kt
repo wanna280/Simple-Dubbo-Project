@@ -33,7 +33,8 @@ open class ConfigurationBeanBindingRegistrar : ImportBeanDefinitionRegistrar, En
     }
 
     override fun registerBeanDefinitions(annotationMetadata: AnnotationMetadata, registry: BeanDefinitionRegistry) {
-        val attributes = annotationMetadata.getAnnotationAttributes(CONFIGURATION_BINDING_ANNOTATION_CLASS)
+        val attributes =
+            annotationMetadata.getAnnotationAttributes(CONFIGURATION_BINDING_ANNOTATION_CLASS) ?: return
         registerConfigurationBeanDefinitions(attributes, registry)
     }
 
@@ -48,7 +49,8 @@ open class ConfigurationBeanBindingRegistrar : ImportBeanDefinitionRegistrar, En
         var prefix = attributes["prefix"] as String
         val type = attributes["type"] as Class<*>
         val multiple = attributes["multiple"] as Boolean
-        val environment = environment ?: throw IllegalStateException("SpringBeanFactory的环境对象不能为空，必须先完成初始化")
+        val environment =
+            environment ?: throw IllegalStateException("SpringBeanFactory的环境对象不能为空，必须先完成初始化")
         prefix = environment.resolvePlaceholders(prefix)!!
 
         // 1.将Dubbo相关的配置信息转换为SpringBeanDefinition，并注册到registry当中(相关的属性被放入到BeanDefinition的Attribute当中)

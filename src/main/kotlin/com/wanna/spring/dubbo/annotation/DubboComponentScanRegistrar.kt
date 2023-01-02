@@ -57,9 +57,9 @@ open class DubboComponentScanRegistrar : ImportBeanDefinitionRegistrar {
      */
     @Suppress("UNCHECKED_CAST")
     private fun getDubboServicePackagesToScan(annotationMetadata: AnnotationMetadata): Set<String> {
-        val attributes = annotationMetadata.getAnnotationAttributes(DubboComponentScan::class.java.name)
+        val attributes = annotationMetadata.getAnnotationAttributes(DubboComponentScan::class.java.name) ?: emptyMap()
 
-        var packages = HashSet<String>()
+        val packages = HashSet<String>()
         packages += (attributes["value"] as Array<String>)
         packages += (attributes["basePackages"] as Array<String>)
         val basePackageClasses = attributes["basePackageClasses"] as Array<Class<*>>

@@ -2,10 +2,8 @@ package com.wanna.spring.dubbo.annotation
 
 import com.wanna.framework.beans.factory.config.BeanDefinitionRegistry
 import com.wanna.framework.context.annotation.AnnotatedBeanDefinitionReader
-import com.wanna.framework.context.annotation.AnnotationAttributesUtils
 import com.wanna.framework.context.annotation.ImportBeanDefinitionRegistrar
 import com.wanna.framework.core.type.AnnotationMetadata
-import com.wanna.spring.dubbo.util.BeanRegistrar
 import com.wanna.spring.dubbo.util.DubboBeanUtils
 
 /**
@@ -19,9 +17,7 @@ import com.wanna.spring.dubbo.util.DubboBeanUtils
 open class DubboConfigConfigurationRegistrar : ImportBeanDefinitionRegistrar {
 
     override fun registerBeanDefinitions(annotationMetadata: AnnotationMetadata, registry: BeanDefinitionRegistry) {
-        val attributes = AnnotationAttributesUtils.fromMap(
-            annotationMetadata.getAnnotationAttributes(EnableDubboConfig::class.java)
-        )
+        val attributes = annotationMetadata.getAnnotations().get(EnableDubboConfig::class.java)
         val reader = AnnotatedBeanDefinitionReader(registry)
 
         // 注册处理单个DubboConfig的配置类到BeanFactory当中

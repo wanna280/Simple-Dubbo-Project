@@ -10,13 +10,15 @@ import com.wanna.framework.beans.factory.support.definition.AbstractBeanDefiniti
 import com.wanna.framework.beans.factory.support.definition.BeanDefinition
 import com.wanna.framework.beans.factory.support.definition.RootBeanDefinition
 import com.wanna.framework.context.annotation.AnnotationAttributes
-import com.wanna.framework.context.annotation.AnnotationAttributesUtils
 import com.wanna.framework.context.annotation.AnnotationBeanNameGenerator
 import com.wanna.framework.context.annotation.BeanNameGenerator
 import com.wanna.framework.context.aware.BeanClassLoaderAware
 import com.wanna.framework.context.aware.EnvironmentAware
 import com.wanna.framework.context.processor.factory.BeanDefinitionRegistryPostProcessor
 import com.wanna.framework.context.processor.factory.internal.ConfigurationClassPostProcessor
+import com.wanna.framework.core.annotation.AnnotationFilter
+import com.wanna.framework.core.annotation.MergedAnnotations
+import com.wanna.framework.core.annotation.RepeatableContainers
 import com.wanna.framework.core.environment.Environment
 import com.wanna.framework.core.type.filter.AnnotationTypeFilter
 import com.wanna.framework.util.AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR
@@ -134,7 +136,16 @@ open class ServiceClassPostProcessor(
 
         // 获取到@DubboService注解的相关属性信息
         val dubboServiceAnnotation = getDubboServiceAnnotation(beanClass)
-        val attributes = AnnotationAttributesUtils.asAnnotationAttributes(dubboServiceAnnotation)!!
+        val mergedAnnotation = MergedAnnotations.from(
+            null,
+            arrayOf(dubboServiceAnnotation),
+            RepeatableContainers.none(),
+            AnnotationFilter.PLAIN
+        ).get(dubboServiceAnnotation::class.java)
+        if (!mergedAnnotation.present) {
+            return
+        }
+        val attributes = mergedAnnotation.asAnnotationAttributes()
 
         // 解析DubboService要进行注册的Service接口
         // 1.如果@DubboService上指定了interfaceClass，那么使用该接口作为ServiceInterface

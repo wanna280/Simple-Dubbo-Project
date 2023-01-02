@@ -9,7 +9,6 @@ import com.wanna.framework.beans.factory.config.ConfigurableListableBeanFactory
 import com.wanna.framework.beans.factory.support.DisposableBean
 import com.wanna.framework.beans.factory.support.definition.RootBeanDefinition
 import com.wanna.framework.context.annotation.AnnotationAttributes
-import com.wanna.framework.context.annotation.AnnotationAttributesUtils
 import com.wanna.framework.context.aware.BeanClassLoaderAware
 import com.wanna.framework.context.aware.EnvironmentAware
 import com.wanna.framework.context.exception.BeanCreationException
@@ -153,8 +152,8 @@ abstract class AbstractAnnotationBeanPostProcessor(private val annotationTypes: 
         val elements = ArrayList<AnnotatedFieldElement>()
         ReflectionUtils.doWithFields(beanClass) { field ->
             getAnnotationTypes().forEach { annotationType ->
-                val annotation = AnnotatedElementUtils.getMergedAnnotation(field, annotationType) ?: return@forEach
-                val attributes = AnnotationAttributesUtils.asAnnotationAttributes(annotation)!!
+                val attributes =
+                    AnnotatedElementUtils.getMergedAnnotationAttributes(field, annotationType) ?: return@forEach
 
                 if (Modifier.isStatic(field.modifiers)) {
                     if (logger.isWarnEnabled) {
@@ -178,8 +177,7 @@ abstract class AbstractAnnotationBeanPostProcessor(private val annotationTypes: 
         val elements = ArrayList<AnnotatedMethodElement>()
         ReflectionUtils.doWithMethods(beanClass) { method ->
             getAnnotationTypes().forEach { annotationType ->
-                val annotation = AnnotatedElementUtils.getMergedAnnotation(method, annotationType) ?: return@forEach
-                val attributes = AnnotationAttributesUtils.asAnnotationAttributes(annotation)!!
+                val attributes= AnnotatedElementUtils.getMergedAnnotationAttributes(method, annotationType) ?: return@forEach
 
                 if (Modifier.isStatic(method.modifiers)) {
                     if (logger.isWarnEnabled) {

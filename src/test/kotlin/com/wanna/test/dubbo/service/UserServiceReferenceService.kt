@@ -18,6 +18,6 @@ class UserServiceReferenceService {
         application = "WannaDubboProject",
         registry = ["wannaRegistry"]
     )
-    lateinit var userService: UserService
+    var userService: UserService? = null
 
 }
