@@ -1,9 +1,9 @@
 package com.wanna.spring.dubbo.annotation
 
 import com.wanna.framework.beans.factory.config.BeanDefinitionRegistry
-import com.wanna.framework.context.annotation.AnnotationAttributes
 import com.wanna.framework.context.annotation.ImportBeanDefinitionRegistrar
 import com.wanna.framework.context.aware.EnvironmentAware
+import com.wanna.framework.core.annotation.AnnotationAttributes
 import com.wanna.framework.core.annotation.AnnotationFilter
 import com.wanna.framework.core.annotation.MergedAnnotations
 import com.wanna.framework.core.annotation.RepeatableContainers

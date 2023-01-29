@@ -5,9 +5,9 @@ import com.wanna.boot.context.properties.ConfigurationProperties
 import com.wanna.boot.context.properties.ConstructorBinding
 import com.wanna.boot.context.properties.EnableConfigurationProperties
 import com.wanna.boot.runSpringApplication
+import com.wanna.framework.beans.factory.config.BeanPostProcessor
 import com.wanna.framework.context.annotation.Autowired
 import com.wanna.framework.context.annotation.Bean
-import com.wanna.framework.context.processor.beans.BeanPostProcessor
 import com.wanna.framework.scheduling.annotation.EnableScheduling
 import com.wanna.framework.scheduling.concurrent.ThreadPoolTaskExecutor
 import com.wanna.spring.dubbo.config.AbstractConfig

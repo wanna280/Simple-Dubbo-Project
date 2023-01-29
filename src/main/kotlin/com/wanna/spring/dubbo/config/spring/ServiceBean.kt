@@ -1,11 +1,11 @@
 package com.wanna.spring.dubbo.config.spring
 
+import com.wanna.framework.beans.factory.BeanNameAware
 import com.wanna.framework.beans.factory.InitializingBean
 import com.wanna.framework.beans.factory.support.DisposableBean
 import com.wanna.framework.context.ApplicationContext
 import com.wanna.framework.context.ApplicationContextAware
 import com.wanna.framework.context.ApplicationEventPublisherAware
-import com.wanna.framework.context.aware.BeanNameAware
 import com.wanna.framework.context.event.ApplicationEventPublisher
 import com.wanna.spring.dubbo.config.ServiceConfig
 

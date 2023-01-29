@@ -1,6 +1,6 @@
 package com.wanna.spring.dubbo.annotation
 
-import com.wanna.framework.context.annotation.AnnotationAttributes
+import com.wanna.framework.core.annotation.AnnotationAttributes
 import com.wanna.framework.core.environment.Environment
 import com.wanna.framework.util.StringUtils
 

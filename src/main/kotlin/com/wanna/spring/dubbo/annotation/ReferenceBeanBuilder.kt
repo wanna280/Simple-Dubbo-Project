@@ -1,9 +1,7 @@
 package com.wanna.spring.dubbo.annotation
 
 import com.wanna.framework.context.ApplicationContext
-import com.wanna.framework.context.annotation.AnnotationAttributes
-import com.wanna.framework.context.exception.NoSuchBeanDefinitionException
-import com.wanna.spring.dubbo.config.ConsumerConfig
+import com.wanna.framework.core.annotation.AnnotationAttributes
 import com.wanna.spring.dubbo.config.spring.ReferenceBean
 
 /**

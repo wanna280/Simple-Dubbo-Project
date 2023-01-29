@@ -2,9 +2,9 @@ package com.wanna.spring.dubbo.annotation
 
 import com.wanna.framework.beans.BeanFactoryAware
 import com.wanna.framework.beans.factory.BeanFactory
+import com.wanna.framework.beans.factory.config.BeanPostProcessor
 import com.wanna.framework.beans.factory.config.ConfigurableListableBeanFactory
 import com.wanna.framework.beans.factory.support.definition.BeanDefinition
-import com.wanna.framework.context.processor.beans.BeanPostProcessor
 import com.wanna.framework.core.Ordered
 import com.wanna.framework.core.PriorityOrdered
 import com.wanna.framework.core.convert.TypeDescriptor

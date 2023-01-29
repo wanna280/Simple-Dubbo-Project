@@ -15,7 +15,10 @@ val ksVersion = "1.0-SNAPSHOT"
 
 dependencies {
     implementation("com.wanna:kotlin-spring-web:$ksVersion")
-    implementation("com.wanna:kotlin-spring-framework:$ksVersion")
+    implementation("com.wanna:kotlin-spring-core:$ksVersion")
+    implementation("com.wanna:kotlin-spring-beans:$ksVersion")
+    implementation("com.wanna:kotlin-spring-aop:$ksVersion")
+    implementation("com.wanna:kotlin-spring-context:$ksVersion")
     implementation("com.wanna:kotlin-spring-boot:$ksVersion")
     implementation("com.wanna:kotlin-spring-boot-autoconfigure:$ksVersion")
 
@@ -44,5 +47,5 @@ dependencies {
     testImplementation("com.alibaba:druid:1.2.10")
     testImplementation("mysql:mysql-connector-java:8.0.29")
     testImplementation("org.apache.httpcomponents:httpclient:4.5.13")
-    testImplementation("com.wanna:logger-slf4j-impl:$ksVersion")
+    testImplementation("com.wanna:kotlin-logger-slf4j-impl:$ksVersion")
 }

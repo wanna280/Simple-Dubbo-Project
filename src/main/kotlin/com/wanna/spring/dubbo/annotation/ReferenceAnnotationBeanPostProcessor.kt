@@ -4,7 +4,7 @@ import com.wanna.framework.beans.factory.InjectionMetadata
 import com.wanna.framework.beans.factory.support.DisposableBean
 import com.wanna.framework.context.ApplicationContext
 import com.wanna.framework.context.ApplicationContextAware
-import com.wanna.framework.context.annotation.AnnotationAttributes
+import com.wanna.framework.core.annotation.AnnotationAttributes
 import com.wanna.framework.core.environment.Environment
 import com.wanna.framework.util.ReflectionUtils
 import com.wanna.framework.util.StringUtils
